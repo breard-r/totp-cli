@@ -14,9 +14,9 @@
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-extern crate otpauth;
-extern crate base32;
-extern crate time;
+extern crate r2fa;
+
+use r2fa::TOTPBuilder;
 use std::io;
 
 
@@ -25,22 +25,14 @@ fn get_secret_key() -> String {
     io::stdin().read_line(&mut key)
         .ok()
         .expect("Failed to read the secret key.");
-    let raw_key = base32::decode(base32::Alphabet::RFC4648 { padding: false }, key.trim()).unwrap();
-    unsafe {
-        let tmp_key = String::from_utf8_unchecked(raw_key);
-        tmp_key
-    }
-}
-
-fn get_code(key: &str) -> u32 {
-    let auth = otpauth::TOTP::new(key);
-    let timestamp = time::now().to_timespec().sec as usize;
-    let code = auth.generate(30, timestamp);
-    code
+    key.trim().to_string()
 }
 
 fn main() {
     let key = get_secret_key();
-    let code = get_code(&key);
-    println!("{:06}", code);
+    let code = TOTPBuilder::new()
+        .base32_key(&key)
+        .finalize()
+        .generate();
+    println!("{}", code);
 }
