@@ -8,4 +8,4 @@ keywords = ["2fa", "totp"]
 license = "ISC"
 
 [dependencies]
-r2fa = "^0.1.0"
+r2fa = "^0.1.1"

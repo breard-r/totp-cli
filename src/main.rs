@@ -16,7 +16,7 @@
 
 extern crate r2fa;
 
-use r2fa::TOTPBuilder;
+use r2fa::otp::TOTPBuilder;
 use std::io;
 
 
