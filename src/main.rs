@@ -33,6 +33,7 @@ fn main() {
     let code = TOTPBuilder::new()
         .base32_key(&key)
         .finalize()
+        .unwrap()
         .generate();
     println!("{}", code);
 }
