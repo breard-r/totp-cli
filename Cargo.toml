@@ -7,6 +7,7 @@ description = "Minimalist TOTP client without key persistence."
 repository = "https://github.com/breard-r/totp-cli"
 keywords = ["2fa", "totp"]
 license = "ISC"
+publish = false
 
 [dependencies]
 
