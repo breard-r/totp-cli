@@ -14,17 +14,16 @@
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-extern crate libreauth;
-
 use libreauth::oath::TOTPBuilder;
 use std::io;
-
 
 fn get_secret_key() -> Option<String> {
     let mut key = String::new();
     let read_len = match io::stdin().read_line(&mut key) {
         Ok(l) => l,
-        Err(_) => { return None; },
+        Err(_) => {
+            return None;
+        }
     };
     if read_len != 0 {
         Some(key.trim().to_string())
@@ -37,7 +36,9 @@ fn main() {
     loop {
         let key = match get_secret_key() {
             Some(k) => k,
-            None => { return ; },
+            None => {
+                return;
+            }
         };
         let code = TOTPBuilder::new()
             .base32_key(&key)
