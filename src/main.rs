@@ -14,9 +14,9 @@
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-extern crate r2fa;
+extern crate libreauth;
 
-use r2fa::otp::TOTPBuilder;
+use libreauth::oath::TOTPBuilder;
 use std::io;
 
 

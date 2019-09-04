@@ -8,4 +8,8 @@ keywords = ["2fa", "totp"]
 license = "ISC"
 
 [dependencies]
-r2fa = "^0.4.0"
+
+[dependencies.libreauth]
+version = "^0.12"
+default-features = false
+features = ["oath"]
