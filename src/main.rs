@@ -20,20 +20,30 @@ use libreauth::oath::TOTPBuilder;
 use std::io;
 
 
-fn get_secret_key() -> String {
+fn get_secret_key() -> Option<String> {
     let mut key = String::new();
-    io::stdin().read_line(&mut key)
-        .ok()
-        .expect("Failed to read the secret key.");
-    key.trim().to_string()
+    let read_len = match io::stdin().read_line(&mut key) {
+        Ok(l) => l,
+        Err(_) => { return None; },
+    };
+    if read_len != 0 {
+        Some(key.trim().to_string())
+    } else {
+        None
+    }
 }
 
 fn main() {
-    let key = get_secret_key();
-    let code = TOTPBuilder::new()
-        .base32_key(&key)
-        .finalize()
-        .unwrap()
-        .generate();
-    println!("{}", code);
+    loop {
+        let key = match get_secret_key() {
+            Some(k) => k,
+            None => { return ; },
+        };
+        let code = TOTPBuilder::new()
+            .base32_key(&key)
+            .finalize()
+            .unwrap()
+            .generate();
+        println!("{}", code);
+    }
 }
