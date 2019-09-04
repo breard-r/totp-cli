@@ -19,13 +19,7 @@ use std::io;
 
 fn get_secret_key() -> Option<String> {
     let mut key = String::new();
-    let read_len = match io::stdin().read_line(&mut key) {
-        Ok(l) => l,
-        Err(_) => {
-            return None;
-        }
-    };
-    if read_len != 0 {
+    if io::stdin().read_line(&mut key).ok()? != 0 {
         Some(key.trim().to_string())
     } else {
         None
